@@ -6,7 +6,7 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 
 
 /**
- * DAo for Home
+ * DAo for Home model class
  */
 public class HomeSprHibDao {
     private HibernateTemplate hibernateTemplate;
