@@ -22,10 +22,6 @@ import java.util.function.Consumer;
  */
 @Repository
 public class StudentDao {
-/*
-    @Autowired
-    public DataSource dataSource;
-*/
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -37,23 +33,15 @@ public class StudentDao {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public void printAllStudents(){
-
-
-        System.out.println(jdbcTemplate.getDataSource());
-       /// String sring = this.jdbcTemplate.queryForObject("select NAME from STUDENT where ID =1",String.class).toString();
-
+    public void printAllStudents() {
         List student = jdbcTemplate.queryForList("select * from STUDENT");
         List<Student> sList = jdbcTemplate.query("select * from STUDENT", getMapper());
 
-
-
-        //System.out.println(sring);
-      System.out.println(sList.get(0).getStudentName());
+        System.out.println(sList.get(0).getStudentName());
         updateBatchRecord();
     }
 
-    public void updateBatchRecord(){
+    public void updateBatchRecord() {
 
         List<Student> students = new ArrayList<>();
         Student s = new Student();
@@ -63,26 +51,33 @@ public class StudentDao {
 
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(students.toArray());
 
-        int[] updatedcount = namedParameterJdbcTemplate.batchUpdate("update Student set NAME = :studentName, ADDRESS = :address where ID = :studId",batch);
+        int[] updatedcount = namedParameterJdbcTemplate.batchUpdate("update Student set NAME = :studentName, ADDRESS = :address where ID = :studId", batch);
 
         Arrays.asList(updatedcount).forEach(ints -> {
-            for (int a: ints
-                 ) {
+            for (int a : ints
+                    )
                 System.out.println(a);
-            }
         });
-
 
     }
 
-    public  static RowMapper getMapper(){
-       return (resultSet, i) -> {
-         Student student = new Student();
-          student.setStudId(resultSet.getString("ID"));
-          student.setStudentName(resultSet.getString("NAME"));
-          student.setAddress(resultSet.getString("ADDRESS"));
-          return student;
-      };
+    public int registerStudent(Student student) {
+        return jdbcTemplate.update("INSERT INTO STUDENT (ID,STUDENTNAME,PERCENTAGE,ADDRESS) VALUES (?,?,?,?)",
+                student.getStudId(), student.getStudentName(), student.getPercentage(), student.getAddress());
+    }
+
+    public int deRegisterStudent(String id) {
+        return jdbcTemplate.update("DELETE FROM STUDENT WHERE ID = ?", id);
+    }
+
+    public static RowMapper getMapper() {
+        return (resultSet, i) -> {
+            Student student = new Student();
+            student.setStudId(resultSet.getString("ID"));
+            student.setStudentName(resultSet.getString("NAME"));
+            student.setAddress(resultSet.getString("ADDRESS"));
+            return student;
+        };
     }
 
 }

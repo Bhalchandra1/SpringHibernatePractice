@@ -3,11 +3,13 @@ package com.abcd.SpringHibernatePractice.model;
 import java.util.UUID;
 
 /**
- * Created by bhalchandra on 11/1/2016.
+ * MOdel Class for Student
  */
+
 public class Student {
     private String studId = UUID.randomUUID().toString();
     private String studentName;
+    private String percentage;
     private String address;
 
     public String getStudId() {
@@ -34,11 +36,20 @@ public class Student {
         this.address = address;
     }
 
+    public String getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(String percentage) {
+        this.percentage = percentage;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
                 "studId=" + studId +
                 ", studentName='" + studentName + '\'' +
+                ", percentage='" + percentage + '\'' +
                 ", address='" + address + '\'' +
                 '}';
     }

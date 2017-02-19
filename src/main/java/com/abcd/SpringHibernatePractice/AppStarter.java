@@ -5,6 +5,7 @@ import com.abcd.SpringHibernatePractice.dao.HomeSprHibDao;
 import com.abcd.SpringHibernatePractice.dao.StudentDao;
 import com.abcd.SpringHibernatePractice.model.Home;
 import com.abcd.SpringHibernatePractice.model.Student;
+import com.abcd.SpringHibernatePractice.service.HomeService;
 import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,17 +19,20 @@ import java.util.ResourceBundle;
 public class AppStarter {
     @SuppressWarnings("resource")
     public static void main(String[] ar){
-        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:config/spring-config.xml");
+        //ApplicationContext context = new ClassPathXmlApplicationContext("classpath:config/spring-config.xml");
         /*Student student = (Student) context.getBean("student");
         System.out.println(student.getStudentName());
         StudentDao studentDao = (StudentDao) context.getBean("studentDao");*/
-        HomeSprHibDao homeSprHibDao = (HomeSprHibDao) context.getBean("homeSprHibDao");
+       /* HomeSprHibDao homeSprHibDao = (HomeSprHibDao) context.getBean("homeSprHibDao");
 
-        homeSprHibDao.persistHome(new Home("sheldi"));
+        homeSprHibDao.persistHome(new Home("ECITY"));
+        System.out.println(homeSprHibDao.getAllHomes().get(0));*/
+//        HomeService service = new HomeService();
+//        service.insertHome();
+       //studentDao.printAllStudents();
 
-       /* studentDao.printAllStudents();
 
         CollegeHibDao c = new CollegeHibDao();
-        c.persistRecord();*/
+        c.persistRecord();
     }
 }

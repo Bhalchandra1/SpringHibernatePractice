@@ -2,25 +2,35 @@ package com.abcd.SpringHibernatePractice.dao;
 
 import com.abcd.SpringHibernatePractice.model.Home;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
  * DAo for Home model class
  */
+@Repository
+@Transactional
 public class HomeSprHibDao {
     private HibernateTemplate hibernateTemplate;
 
+    @Autowired
     public void setSessionFactory(SessionFactory sessionFactory){
         hibernateTemplate = new HibernateTemplate(sessionFactory);
     }
 
     public void persistHome(Home home){
         hibernateTemplate.setCheckWriteOperations(false);
-        hibernateTemplate.saveOrUpdate(home);
         hibernateTemplate.persist(home);
-        System.out.println(home.getHomeNumber());
-       //System.out.println("Persisted"+ hibernateTemplate.find("from Home where homeNumber = ?",home.getHomeNumber()));
+            }
 
+    public List<Home> getAllHomes(){
+        hibernateTemplate.setCheckWriteOperations(false);
+       return (List)hibernateTemplate.find("from Home");
     }
 }

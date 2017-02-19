@@ -7,10 +7,10 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 /**
- * Created by bhalchandra on 11/6/2016.
+ * Model class for College
  */
 @Entity
-@Table (name = "College")
+@Table(name = "College")
 public class College {
 
     @Column(name = "cid")
